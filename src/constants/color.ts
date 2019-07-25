@@ -1,0 +1,13 @@
+export const COLOR_PALE_GREY = "#f4f8fa";
+export const COLOR_BLUEGREY = "#78a9ce";
+export const COLOR_COOL_BLUE = "#407fc4";
+export const COLOR_TWILIGHT_BLUE = "#0949a1";
+export const COLOR_LIGHT_NAVY = "#153f6c";
+export const COLOR_VERY_LIGHT_PINK = "#fefcf8";
+export const COLOR_MARIGOLD = "#fac408";
+export const COLOR_ORANGE_YELLOW = "#fcac04";
+export const COLOR_MAIN = "#cf4647";
+export const COLOR_WHITE = "#ffffff";
+export const COLOR_PLACEHOLDER = "#c4c4c4";
+export const COLOR_BLUE_GREY = "#8a8a8f";
+export const COLOR_BLACK = "#000000";

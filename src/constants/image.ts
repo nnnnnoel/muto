@@ -1,0 +1,15 @@
+export const IMAGE_LOGO = require("../../Assets/Logo.png");
+export const IMAGE_CHECK_BACKGROUND = require("../../Assets/CheckBackground.png");
+export const IMAGE_EYE_SHOW = require("../../Assets/view-show.png");
+export const IMAGE_EYE_HIDE = require("../../Assets/view-hide.png");
+export const IMAGE_MAIN_DRAWER = require("../../Assets/main-drawer.png");
+export const IMAGE_PENCIL_WHITE = require("../../Assets/edit-pencil-white.png");
+export const IMAGE_BORDER_INNER = require("../../Assets/border-inner.png");
+export const IMAGE_MAIN_DRAWER_WHITE = require("../../Assets/main-drawer-white.png");
+export const IMAGE_CHEVRON_LEFT = require("../../Assets/chevron-left.png");
+export const IMAGE_CHEVRON_RIGHT = require("../../Assets/chevron-right.png");
+export const IMAGE_ADD_FLOAT = require("../../Assets/add-float.png");
+export const IMAGE_VIEW_CAROUSEL = require("../../Assets/view-carousel.png");
+export const IMAGE_VIEW_LIST = require("../../Assets/view-list.png");
+export const IMAGE_VIEW_COLUMN = require("../../Assets/view-column.png");
+export const IMAGE_BACK = require("../../Assets/back.png");
