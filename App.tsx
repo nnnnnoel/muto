@@ -35,6 +35,10 @@ import MainListScreen from "./src/screens/MainListScreen";
 import CreateNoteScreen from "./src/screens/CreateNoteScreen";
 import CreateNoteDateScreen from "./src/screens/CreateNoteDateScreen";
 import CreateNoteCategoryScreen from "./src/screens/CreateNoteCategoryScreen";
+import CardScreen from "./src/screens/CardScreen";
+import CreateGroupScreen from "./src/screens/CreateGroupScreen";
+import CreateGroupCodeScreen from "./src/screens/CreateGroupCodeScreen";
+import JoinGroupScreen from "./src/screens/JoinGroupScreen";
 
 const App = () => {
   return (
@@ -59,7 +63,11 @@ const MainStack = createStackNavigator({
   MainList: { screen: MainListScreen },
   CreateNote: { screen: CreateNoteScreen },
   CreateNoteDate: { screen: CreateNoteDateScreen },
-  CreateNoteCategory: { screen: CreateNoteCategoryScreen }
+  CreateNoteCategory: { screen: CreateNoteCategoryScreen },
+  Card: { screen: CardScreen },
+  CreateGroup: { screen: CreateGroupScreen },
+  CreateGroupCode: { screen: CreateGroupCodeScreen },
+  JoinGroup: { screen: JoinGroupScreen }
 });
 
 const MainSwitch = createSwitchNavigator({

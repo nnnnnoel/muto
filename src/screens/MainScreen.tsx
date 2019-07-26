@@ -5,7 +5,7 @@ import {
   ScrollView,
   FlatList
 } from "react-navigation";
-import { View, TouchableOpacity, Image, Text } from "react-native";
+import { View, TouchableOpacity, Image, Text, Platform } from "react-native";
 import { SafeAreaView } from "react-navigation";
 import { Calendar, CalendarList } from "react-native-calendars";
 import { width, getWidth, getHeight } from "../constants/size";
@@ -18,7 +18,8 @@ import {
   IMAGE_CHEVRON_RIGHT,
   IMAGE_ADD_FLOAT,
   IMAGE_VIEW_COLUMN,
-  IMAGE_VIEW_LIST
+  IMAGE_VIEW_LIST,
+  IMAGE_BORDER_OUTER
 } from "../constants/image";
 import Modal from "react-native-modal";
 import fonts from "../constants/fonts";
@@ -33,6 +34,9 @@ import {
 } from "../constants/color";
 import { useObservable } from "mobx-react-lite";
 import moment from "moment";
+import { action } from "mobx";
+import { string } from "prop-types";
+import { toAbsoluteTime, toAbsoluteTimeWithoutYear } from "../constants/func";
 
 interface MainScreenProps {
   navigation: NavigationScreenProp<{}>;
@@ -41,6 +45,143 @@ interface MainScreenProps {
 const MainScreen = (props: MainScreenProps) => {
   const [drawer, setDrawer] = React.useState(false);
   const { navigation } = props;
+
+  const [groups, setGroups] = React.useState([]);
+
+  const [cards, setCards] = React.useState([
+    { title: "첫번째 회고", date: "2019-07-16" },
+    { title: "두번째 회고", date: "2019-07-16" },
+    { title: "세번째 회고", date: "2019-07-16" },
+    { title: "육회고", date: "2019-07-16" },
+    { title: "사시미회고", date: "2019-07-16" },
+    { title: "학예회고", date: "2019-07-16" },
+    { title: "체육대회고", date: "2019-07-16" },
+    { title: "이번시간사회고", date: "2019-07-16" },
+    { title: "그건오회고", date: "2019-07-16" },
+    { title: "육회공", date: "2019-07-16" },
+    { title: "학생회고", date: "2019-07-16" },
+    { title: "사성회고", date: "2019-07-16" }
+  ]);
+
+  const getData = async () => {
+    const response = await fetch("https://hanseithon.curo.xyz/R/groups");
+    const json = await response.json();
+    setGroups(json);
+    console.log(json);
+  };
+
+  React.useEffect(() => {
+    getData();
+  });
+
+  const renderCards = action(
+    ({ item }: { item: { title: string; date: string } }) => {
+      return (
+        <TouchableOpacity
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: COLOR_WHITE,
+            width: getWidth(308),
+            height: getWidth(60),
+            borderRadius: 4,
+            marginTop: getHeight(15)
+          }}
+          onPress={() =>
+            navigation.navigate("Card", {
+              title: item.title,
+              date: item.date
+            })
+          }
+        >
+          <View
+            style={{
+              backgroundColor: COLOR_COOL_BLUE,
+              width: 8,
+              height: 8,
+              borderRadius: 4,
+              marginLeft: getWidth(14.5)
+            }}
+          />
+          <View style={{ marginLeft: getWidth(14.5) }}>
+            <Text
+              style={[
+                fonts.namoo,
+                { color: COLOR_BLACK, fontSize: 16, width: getWidth(100) }
+              ]}
+              allowFontScaling={false}
+            >
+              {item.title}
+            </Text>
+            <Text
+              style={[
+                fonts.namoo,
+                {
+                  color: COLOR_TWILIGHT_BLUE,
+                  fontSize: 12,
+                  width: getWidth(100),
+                  marginTop: 8
+                }
+              ]}
+              allowFontScaling={false}
+            >
+              {toAbsoluteTimeWithoutYear(item.date)}
+            </Text>
+          </View>
+          <Image
+            source={IMAGE_CHEVRON_RIGHT}
+            style={{
+              width: getWidth(24),
+              height: getWidth(24),
+              marginLeft: getWidth(132)
+            }}
+          />
+        </TouchableOpacity>
+      );
+    }
+  );
+
+  const renderGroups = action(
+    ({ item }: { item: { title: string; invite_code: string } }) => {
+      return (
+        <TouchableOpacity
+          style={{
+            justifyContent: "center",
+            width: getWidth(308),
+            height: 70,
+            marginTop: getWidth(15)
+          }}
+        >
+          <Text
+            style={[
+              fonts.namoo,
+              {
+                color: COLOR_TWILIGHT_BLUE,
+                fontSize: 20,
+                marginLeft: getWidth(25)
+              }
+            ]}
+            allowFontScaling={false}
+          >
+            {item.title}
+          </Text>
+          <Text
+            style={[
+              fonts.namoo,
+              {
+                color: COLOR_COOL_BLUE,
+                fontSize: 18,
+                marginLeft: getWidth(25)
+              }
+            ]}
+            allowFontScaling={false}
+          >
+            {item.invite_code}
+          </Text>
+        </TouchableOpacity>
+      );
+    }
+  );
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -108,92 +249,25 @@ const MainScreen = (props: MainScreenProps) => {
               </TouchableOpacity>
             </View>
             <ScrollView>
-              <TouchableOpacity
-                style={{
-                  justifyContent: "center",
-                  width: getWidth(308),
-                  height: 70,
-                  marginTop: getWidth(15)
-                }}
-              >
-                <Text
-                  style={[
-                    fonts.namoo,
-                    {
-                      color: COLOR_TWILIGHT_BLUE,
-                      fontSize: 20,
-                      marginLeft: getWidth(25)
-                    }
-                  ]}
-                  allowFontScaling={false}
-                >
-                  맥북에 커피쏟음
-                </Text>
-                <Text
-                  style={[
-                    fonts.namoo,
-                    {
-                      color: COLOR_COOL_BLUE,
-                      fontSize: 18,
-                      marginLeft: getWidth(25)
-                    }
-                  ]}
-                  allowFontScaling={false}
-                >
-                  asd1234
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{
-                  justifyContent: "center",
-                  width: getWidth(308),
-                  height: 70,
-                  marginTop: getWidth(15)
-                }}
-              >
-                <Text
-                  style={[
-                    fonts.namoo,
-                    {
-                      color: COLOR_TWILIGHT_BLUE,
-                      fontSize: 20,
-                      marginLeft: getWidth(25)
-                    }
-                  ]}
-                  allowFontScaling={false}
-                >
-                  우리 개발 망했음
-                </Text>
-                <Text
-                  style={[
-                    fonts.namoo,
-                    {
-                      color: COLOR_COOL_BLUE,
-                      fontSize: 18,
-                      marginLeft: getWidth(25)
-                    }
-                  ]}
-                  allowFontScaling={false}
-                >
-                  ggwp1234
-                </Text>
-              </TouchableOpacity>
+              <FlatList
+                data={groups}
+                keyExtractor={(_x, i) => `group${i}`}
+                renderItem={renderGroups}
+              />
               <TouchableOpacity
                 style={{
                   flexDirection: "row",
-                  alignItems: "center",
                   width: getWidth(308),
-                  height: 70,
-                  marginTop: getWidth(15)
+                  height: getWidth(70),
+                  alignItems: "center"
                 }}
-                onPress={() => {}}
               >
                 <Image
                   source={IMAGE_BORDER_INNER}
                   style={{
-                    width: 32.4,
-                    height: 32.4,
-                    marginLeft: getWidth(28.8)
+                    width: getWidth(24),
+                    height: getWidth(24),
+                    marginLeft: getWidth(25)
                   }}
                 />
                 <Text
@@ -202,15 +276,48 @@ const MainScreen = (props: MainScreenProps) => {
                     {
                       color: COLOR_TWILIGHT_BLUE,
                       fontSize: 18,
-                      marginLeft: getWidth(22.8)
+                      marginLeft: getWidth(9)
                     }
                   ]}
                   allowFontScaling={false}
                 >
-                  그룹 추가
+                  그룹 참가
                 </Text>
               </TouchableOpacity>
             </ScrollView>
+            <TouchableOpacity
+              style={{
+                flexDirection: "row",
+                width: getWidth(308),
+                height: getWidth(56),
+                justifyContent: "center",
+                alignItems: "center",
+                borderTopColor: COLOR_TWILIGHT_BLUE,
+                borderTopWidth: 1
+              }}
+              onPress={() => {
+                setDrawer(false);
+                navigation.navigate("CreateGroup");
+              }}
+            >
+              <Image
+                source={IMAGE_BORDER_OUTER}
+                style={{ width: getWidth(20), height: getWidth(20) }}
+              />
+              <Text
+                style={[
+                  fonts.namoo,
+                  {
+                    color: COLOR_TWILIGHT_BLUE,
+                    fontSize: 20,
+                    marginLeft: getWidth(5)
+                  }
+                ]}
+                allowFontScaling={false}
+              >
+                그룹 생성
+              </Text>
+            </TouchableOpacity>
           </View>
         </SafeAreaView>
       </Modal>
@@ -354,167 +461,11 @@ const MainScreen = (props: MainScreenProps) => {
           >
             회고록
           </Text>
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: COLOR_WHITE,
-              width: getWidth(308),
-              height: getWidth(60),
-              borderRadius: 4
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: COLOR_COOL_BLUE,
-                width: 8,
-                height: 8,
-                borderRadius: 4,
-                marginLeft: getWidth(14.5)
-              }}
-            />
-            <View style={{ marginLeft: getWidth(14.5) }}>
-              <Text
-                style={[
-                  fonts.namoo,
-                  { color: COLOR_BLACK, fontSize: 16, width: getWidth(100) }
-                ]}
-                allowFontScaling={false}
-              >
-                1차 회고
-              </Text>
-              <Text
-                style={[
-                  fonts.namoo,
-                  {
-                    color: COLOR_TWILIGHT_BLUE,
-                    fontSize: 12,
-                    width: getWidth(100),
-                    marginTop: 8
-                  }
-                ]}
-                allowFontScaling={false}
-              >
-                12월 6일
-              </Text>
-            </View>
-            <Image
-              source={IMAGE_CHEVRON_RIGHT}
-              style={{
-                width: getWidth(24),
-                height: getWidth(24),
-                marginLeft: getWidth(132)
-              }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: COLOR_WHITE,
-              width: getWidth(308),
-              height: getWidth(60),
-              borderRadius: 4,
-              marginTop: getHeight(15)
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: COLOR_COOL_BLUE,
-                width: 8,
-                height: 8,
-                borderRadius: 4,
-                marginLeft: getWidth(14.5)
-              }}
-            />
-            <View style={{ marginLeft: getWidth(14.5) }}>
-              <Text
-                style={[
-                  fonts.namoo,
-                  { color: COLOR_BLACK, fontSize: 16, width: getWidth(100) }
-                ]}
-                allowFontScaling={false}
-              >
-                2차 회고
-              </Text>
-              <Text
-                style={[
-                  fonts.namoo,
-                  {
-                    color: COLOR_TWILIGHT_BLUE,
-                    fontSize: 12,
-                    width: getWidth(100),
-                    marginTop: 8
-                  }
-                ]}
-                allowFontScaling={false}
-              >
-                12월 24일
-              </Text>
-            </View>
-            <Image
-              source={IMAGE_CHEVRON_RIGHT}
-              style={{
-                width: getWidth(24),
-                height: getWidth(24),
-                marginLeft: getWidth(132)
-              }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              backgroundColor: COLOR_WHITE,
-              width: getWidth(308),
-              height: getWidth(60),
-              borderRadius: 4,
-              marginTop: getHeight(15)
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: COLOR_COOL_BLUE,
-                width: 8,
-                height: 8,
-                borderRadius: 4,
-                marginLeft: getWidth(14.5)
-              }}
-            />
-            <View style={{ marginLeft: getWidth(14.5) }}>
-              <Text
-                style={[
-                  fonts.namoo,
-                  { color: COLOR_BLACK, fontSize: 16, width: getWidth(100) }
-                ]}
-                allowFontScaling={false}
-              >
-                3차 회고
-              </Text>
-              <Text
-                style={[
-                  fonts.namoo,
-                  {
-                    color: COLOR_TWILIGHT_BLUE,
-                    fontSize: 12,
-                    width: getWidth(100),
-                    marginTop: 8
-                  }
-                ]}
-                allowFontScaling={false}
-              >
-                1월 6일
-              </Text>
-            </View>
-            <Image
-              source={IMAGE_CHEVRON_RIGHT}
-              style={{
-                width: getWidth(24),
-                height: getWidth(24),
-                marginLeft: getWidth(132)
-              }}
-            />
-          </TouchableOpacity>
+          <FlatList
+            data={cards}
+            renderItem={renderCards}
+            keyExtractor={(_x, i) => `회고록${i}`}
+          />
         </ScrollView>
         <TouchableOpacity
           style={{

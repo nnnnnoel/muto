@@ -42,7 +42,7 @@ const SignInScreen = (props: SignInScreenProps) => {
         alignItems: "center"
       }}
     >
-      <KeyboardAvoidingView behavior="padding">
+      <KeyboardAvoidingView behavior="height">
         <ScrollView contentContainerStyle={{ alignItems: "center" }}>
           <Image
             source={IMAGE_LOGO}

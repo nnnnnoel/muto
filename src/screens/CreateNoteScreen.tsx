@@ -1,7 +1,14 @@
 import * as React from "react";
 import { NavigationScreenOptions, SafeAreaView } from "react-navigation";
 import { NavigationScreenProp } from "react-navigation";
-import { View, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  Alert
+} from "react-native";
 import fonts from "../constants/fonts";
 import {
   COLOR_PLACEHOLDER,
@@ -88,7 +95,10 @@ const SignPhScreen = (props: SignPhScreenProps) => {
         }}
         onPress={async () => {
           NoteStore.name = name;
-          navigation.navigate("CreateNoteDate");
+          (name !== "" && navigation.navigate("CreateNoteDate")) ||
+            Alert.alert("경고", "회고록 이름을 설정해주세요.", [
+              { text: "확인" }
+            ]);
         }}
       >
         <Text

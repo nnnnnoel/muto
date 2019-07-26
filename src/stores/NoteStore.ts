@@ -3,13 +3,13 @@ import { observable } from "mobx";
 
 export interface NoteStoreTypes {
   name: string;
-  date: moment.Moment;
+  date: Date;
   categories: string[];
 }
 
 class NoteStore implements NoteStoreTypes {
   @observable name = "";
-  @observable date = moment();
+  @observable date = new Date();
   @observable categories: string[] = [];
 }
 

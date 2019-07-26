@@ -272,7 +272,7 @@ const CreateNoteDateScreen = (
           bottom: getHeight(110)
         }}
         onPress={async () => {
-          NoteStore.date = moment(
+          NoteStore.date = new Date(
             years[currentYear] +
               "-" +
               months[currentMonth] +

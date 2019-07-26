@@ -13,3 +13,6 @@ export const IMAGE_VIEW_CAROUSEL = require("../../Assets/view-carousel.png");
 export const IMAGE_VIEW_LIST = require("../../Assets/view-list.png");
 export const IMAGE_VIEW_COLUMN = require("../../Assets/view-column.png");
 export const IMAGE_BACK = require("../../Assets/back.png");
+export const IMAGE_BORDER_BOTTOM = require("../../Assets/border-bottom.png");
+export const IMAGE_PENCIL_BLUE = require("../../Assets/edit-pencil.png");
+export const IMAGE_BORDER_OUTER = require("../../Assets/border-outer.png");
